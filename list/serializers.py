@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.db import models
-from .models import TodoList
+from .models import *
 import json
 
 
@@ -21,13 +21,9 @@ class TodolistSerializer(serializers.ModelSerializer):
         return json.loads(obj.image_list)
 
 
-class TodoSerializer(TodolistSerializer):
+class BestSerializer(serializers.ModelSerializer):
+    todo = TodolistSerializer()
+
     class Meta:
-        model = TodoList
+        model = Bests
         fields = '__all__'
-
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-
-        if instance.contents == 'testtest':
-            return rep
