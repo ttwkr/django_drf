@@ -23,6 +23,7 @@ class TodoListViewSet(viewsets.GenericViewSet):
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
         return JsonResponse({
+            'id': 'hi'
             'result': serializer.data
         })
 
