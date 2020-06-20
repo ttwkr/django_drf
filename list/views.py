@@ -11,6 +11,9 @@ from django.http import JsonResponse, HttpResponse
 class TodoListViewSet(viewsets.GenericViewSet):
     model = TodoList
     serializer_class = TodolistSerializer
+    # 검색
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['contents']
 
     def get_queryset(self):
         queryset = self.model.objects.all()
