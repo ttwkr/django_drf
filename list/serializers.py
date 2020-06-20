@@ -19,3 +19,15 @@ class TodolistSerializer(serializers.ModelSerializer):
 
     def get_image_list(self, obj):
         return json.loads(obj.image_list)
+
+
+class TodoSerializer(TodolistSerializer):
+    class Meta:
+        model = TodoList
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+
+        if instance.contents == 'testtest':
+            return rep

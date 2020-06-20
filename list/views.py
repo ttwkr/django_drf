@@ -10,7 +10,7 @@ from django.http import JsonResponse, HttpResponse
 
 class TodoListViewSet(viewsets.GenericViewSet):
     model = TodoList
-    serializer_class = TodolistSerializer
+    serializer_class = TodoSerializer
 
     def get_queryset(self):
         queryset = self.model.objects.all()
