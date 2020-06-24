@@ -43,3 +43,20 @@ class BestViesSet(viewsets.GenericViewSet):
         return JsonResponse({
             'result': serializer.data
         })
+
+
+class ShopDetailViewSet(viewsets.GenericViewSet):
+    model = Shop
+    serializer_class = ShopDetailSerializer
+    # 검색
+
+    def get_queryset(self):
+        queryset = self.model.objects.all()
+        return queryset
+
+    def list(self, request, pk, *arg, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset()).filter(id=pk)
+        serializer = self.get_serializer(queryset, many=True)
+        return JsonResponse({
+            'result': serializer.data
+        })

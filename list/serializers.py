@@ -27,3 +27,30 @@ class BestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bests
         fields = '__all__'
+
+
+class ShopSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Shop
+        fields = '__all__'
+
+
+class ItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Item
+        fields = '__all__'
+
+
+class ShopDetailSerializer(serializers.Serializer):
+    shop = serializers.SerializerMethodField()
+    item = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Shop
+        fields = '__all__'
+
+    def get_shop(self, instance):
+        return ShopSerializer()
+
+    def get_item(self, instance):
+        return ItemSerializer()
