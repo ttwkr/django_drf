@@ -45,7 +45,7 @@ class BestViesSet(viewsets.GenericViewSet):
         })
 
 
-class ShopDetailViewSet(viewsets.GenericViewSet):
+class ShopDetailViewSet(generics.RetrieveAPIView):
     model = Shop
     serializer_class = ShopDetailSerializer
     # 검색
@@ -54,9 +54,25 @@ class ShopDetailViewSet(viewsets.GenericViewSet):
         queryset = self.model.objects.all()
         return queryset
 
-    def list(self, request, pk, *arg, **kwargs):
+    def retrieve(self, request, pk, *arg, **kwargs):
         queryset = self.filter_queryset(self.get_queryset()).filter(id=pk)
         serializer = self.get_serializer(queryset, many=True)
+        return JsonResponse({
+            'result': serializer.data
+        })
+
+
+class MapShopListVeiwSet(viewsets.GenericViewSet):
+    model = Shop
+    serializer_class = MapShopListSerializer
+
+    def queryset(self):
+        queryset = self.model.objects.all()
+        return queryset
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.serializer_class(data=request.data)
         return JsonResponse({
             'result': serializer.data
         })

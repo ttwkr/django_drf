@@ -42,15 +42,14 @@ class ItemSerializer(serializers.ModelSerializer):
 
 
 class ShopDetailSerializer(serializers.Serializer):
-    shop = serializers.SerializerMethodField()
-    item = serializers.SerializerMethodField()
+    item = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Shop
         fields = '__all__'
 
-    def get_shop(self, instance):
-        return ShopSerializer()
 
-    def get_item(self, instance):
-        return ItemSerializer()
+class MapShopListSerializer(serializers.Serializer):
+    class Meta:
+        model = Shop
+        fields = '__all__'
