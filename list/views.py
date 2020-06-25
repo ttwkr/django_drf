@@ -55,8 +55,8 @@ class ShopDetailViewSet(generics.RetrieveAPIView):
         return queryset
 
     def retrieve(self, request, pk, *arg, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset()).filter(id=pk)
-        serializer = self.get_serializer(queryset, many=True)
+        queryset = self.filter_queryset(self.get_queryset()).get(id=pk)
+        serializer = self.get_serializer(queryset)
         return JsonResponse({
             'result': serializer.data
         })

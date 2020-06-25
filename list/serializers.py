@@ -41,12 +41,12 @@ class ItemSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ShopDetailSerializer(serializers.Serializer):
-    item = serializers.PrimaryKeyRelatedField(read_only=True)
+class ShopDetailSerializer(serializers.ModelSerializer):
+    item = ItemSerializer(required=False, many=True)
 
     class Meta:
         model = Shop
-        fields = '__all__'
+        fields = ['id', 'name', 'item']
 
 
 class MapShopListSerializer(serializers.Serializer):

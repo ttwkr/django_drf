@@ -40,7 +40,7 @@ class Shop(models.Model):
 
 class Item(models.Model):
     id = models.AutoField(primary_key=True)
-    shop = models.ForeignKey(Shop, models.DO_NOTHING)
+    shop = models.ForeignKey(Shop, models.DO_NOTHING, related_name='item')
     name = models.CharField(max_length=45)
     qty = models.IntegerField()
     created_at = models.DateTimeField()
