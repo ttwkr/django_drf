@@ -13,7 +13,7 @@ class TodoListViewSet(viewsets.GenericViewSet):
     serializer_class = TodolistSerializer
     # 검색
     filter_backends = [filters.SearchFilter]
-    search_fields = ['contents']
+    search_fields = ["contents"]
 
     def get_queryset(self):
         queryset = self.model.objects.all()
@@ -22,9 +22,7 @@ class TodoListViewSet(viewsets.GenericViewSet):
     def list(self, request, *arg, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
-        return JsonResponse({
-            'result': serializer.data
-        })
+        return JsonResponse({"result": serializer.data})
 
 
 class BestViesSet(viewsets.GenericViewSet):
@@ -36,13 +34,10 @@ class BestViesSet(viewsets.GenericViewSet):
         return queryset
 
     def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(
-            self.get_queryset()).filter(todo__is_use=1)
+        queryset = self.filter_queryset(self.get_queryset()).filter(todo__is_use=1)
         serializer = self.get_serializer(queryset, many=True)
 
-        return JsonResponse({
-            'result': serializer.data
-        })
+        return JsonResponse({"result": serializer.data})
 
 
 class ShopDetailViewSet(generics.RetrieveAPIView):
@@ -57,9 +52,7 @@ class ShopDetailViewSet(generics.RetrieveAPIView):
     def retrieve(self, request, pk, *arg, **kwargs):
         queryset = self.filter_queryset(self.get_queryset()).get(id=pk)
         serializer = self.get_serializer(queryset)
-        return JsonResponse({
-            'result': serializer.data
-        })
+        return JsonResponse({"result": serializer.data})
 
 
 class MapShopListVeiwSet(viewsets.GenericViewSet):
@@ -73,6 +66,24 @@ class MapShopListVeiwSet(viewsets.GenericViewSet):
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.serializer_class(data=request.data)
-        return JsonResponse({
-            'result': serializer.data
-        })
+        return JsonResponse({"result": serializer.data})
+
+
+class LikeViewSet(generics.GenericAPIView):
+    model = Likes
+    serializer_class = LikeSerializer
+
+    def create(self, request, *args, **kwargs):
+        data = json.loads(json.dumps(request.data))
+        serializer = self.serializer_class(data=data)
+
+        try:
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+
+                return JsonResponse({"result": "success"})
+
+            return JsonResponse({"result": "fail"})
+        except Exception as ex:
+            return JsonResponse({"result": str(ex)})
+

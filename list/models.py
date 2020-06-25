@@ -12,17 +12,16 @@ class TodoList(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'todolists'
+        db_table = "todolists"
 
 
 class Bests(models.Model):
     id = models.AutoField(primary_key=True)
-    todo = models.ForeignKey(
-        TodoList, models.DO_NOTHING)
+    todo = models.ForeignKey(TodoList, models.DO_NOTHING)
 
     class Meta:
         managed = False
-        db_table = 'bests'
+        db_table = "bests"
 
 
 class Shop(models.Model):
@@ -35,12 +34,12 @@ class Shop(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'shops'
+        db_table = "shops"
 
 
 class Item(models.Model):
     id = models.AutoField(primary_key=True)
-    shop = models.ForeignKey(Shop, models.DO_NOTHING, related_name='item')
+    shop = models.ForeignKey(Shop, models.DO_NOTHING, related_name="item")
     name = models.CharField(max_length=45)
     qty = models.IntegerField()
     created_at = models.DateTimeField()
@@ -49,7 +48,7 @@ class Item(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'item'
+        db_table = "item"
 
 
 class ShopImage(models.Model):
@@ -62,4 +61,16 @@ class ShopImage(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'shop_images'
+        db_table = "shop_images"
+
+
+class Likes(models.Model):
+    id = models.AutoField(primary_key=True)
+    shop = models.ForeignKey(Shop, models.DO_NOTHING)
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
+    deleted_at = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = "likes"

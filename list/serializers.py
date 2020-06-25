@@ -14,8 +14,14 @@ class TodolistSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TodoList
-        fields = ('id', 'contents', 'image_list',
-                  'created_at', 'updated_at', 'deleted_at',)
+        fields = (
+            "id",
+            "contents",
+            "image_list",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+        )
 
     def get_image_list(self, obj):
         return json.loads(obj.image_list)
@@ -26,19 +32,19 @@ class BestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Bests
-        fields = '__all__'
+        fields = "__all__"
 
 
 class ShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shop
-        fields = '__all__'
+        fields = "__all__"
 
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = '__all__'
+        fields = "__all__"
 
 
 class ShopDetailSerializer(serializers.ModelSerializer):
@@ -46,10 +52,19 @@ class ShopDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Shop
-        fields = ['id', 'name', 'item']
+        fields = ["id", "name", "item"]
 
 
 class MapShopListSerializer(serializers.Serializer):
     class Meta:
         model = Shop
-        fields = '__all__'
+        fields = "__all__"
+
+
+class LikeSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    shop = ShopSerializer()
+
+    class Meta:
+        model = Likes
+        fields = "__all__"
